@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bali Countdown</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: "Arial", sans-serif;
+      }
+
+      .countdown-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        text-align: center;
+      }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .countdown-box {
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .countdown-box:hover {
+        transform: scale(1.05);
+      }
+
+      .countdown-number {
+        font-size: 3em;
+        font-weight: bold;
+        color: #e91e63;
+        margin: 0;
+      }
+
+      .countdown-label {
+        font-size: 1.2em;
+        color: #333;
+        text-transform: uppercase;
+        margin-top: 5px;
+      }
+
+      .message {
+        font-size: 1.5em;
+        color: #fff;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="countdown-container">
+      <h1>Countdown to Bali Adventure</h1>
+      <div class="countdown" id="countdown">
+        <div class="countdown-box">
+          <div class="countdown-number" id="days">00</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="hours">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="minutes">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-number" id="seconds">00</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+      <div class="message" id="message"></div>
+    </div>
+
+    <script>
+      // Set the target date in Bali time (WITA UTC+8)
+      // Converted to UTC: June 30 00:05 WITA = June 29 16:05 UTC
+      const targetDate = new Date("2025-06-29T16:05:00Z");
+
+      function updateCountdown() {
+        const now = new Date();
+        const timeDifference = targetDate - now;
+
+        if (timeDifference <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdown").style.display = "none";
+          document.getElementById("message").textContent =
+            "The adventure has begun!";
+          return;
+        }
+
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("hours").textContent = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").textContent = String(
+          minutes
+        ).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(
+          seconds
+        ).padStart(2, "0");
+      }
+
+      // Update every second
+      const countdownInterval = setInterval(updateCountdown, 1000);
+      // Initial call to avoid delay
+      updateCountdown();
+    </script>
+  </body>
+</html>
