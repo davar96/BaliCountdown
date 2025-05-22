@@ -112,6 +112,10 @@
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
       .countdown-box::before {
@@ -146,9 +150,15 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        color: #667eea; /* Fallback color */
         line-height: 1;
         position: relative;
         z-index: 1;
+        display: inline-block;
+        text-align: center;
+        letter-spacing: -1px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       .countdown-label {
@@ -213,7 +223,16 @@
         }
 
         .countdown-box {
-          padding: 1.5rem 1.25rem;
+          padding: 2rem 1.5rem;
+        }
+
+        .countdown-number {
+          font-size: 3.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .countdown-label {
+          font-size: 1rem;
         }
       }
 
