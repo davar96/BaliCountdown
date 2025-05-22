@@ -2,103 +2,286 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Bali Countdown</title>
     <style>
-      body {
+      * {
         margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
         min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated background */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          );
+        animation: float 20s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        33% {
+          transform: translate(-20px, -20px) rotate(1deg);
+        }
+        66% {
+          transform: translate(20px, -10px) rotate(-1deg);
+        }
       }
 
       .countdown-container {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15),
+          0 0 0 1px rgba(255, 255, 255, 0.5) inset;
         text-align: center;
-        max-width: 800px;
+        position: relative;
+        z-index: 1;
+        width: 90%;
+        max-width: 500px;
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .subtitle {
+        font-size: clamp(0.875rem, 2.5vw, 1.1rem);
+        color: #666;
+        margin-bottom: 2rem;
+        opacity: 0.8;
       }
 
       .countdown {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px;
-        margin: 30px 0;
-      }
-
-      /* Desktop enhancements */
-      @media (min-width: 768px) {
-        .countdown-number {
-          font-size: 4em;
-        }
-        .countdown-label {
-          font-size: 1.5em;
-        }
-      }
-
-      /* Mobile layout */
-      @media (max-width: 600px) {
-        .countdown {
-          grid-template-columns: 1fr; /* Stack vertically */
-          gap: 20px; /* Add vertical spacing */
-        }
-        .countdown-box {
-          padding: 25px 15px; /* Increased padding */
-          margin-bottom: 20px; /* Space between boxes */
-        }
-        .countdown-number {
-          font-size: 2.5em; /* Larger numbers */
-        }
-        .countdown-label {
-          font-size: 1em; /* Smaller labels */
-        }
-        h1 {
-          font-size: 2em; /* Smaller title */
-        }
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
       }
 
       .countdown-box {
-        padding: 25px;
-        background: #fff;
-        border-radius: 15px;
-        transition: transform 0.3s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 16px;
+        padding: 1.25rem 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .countdown-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(102, 126, 234, 0.1),
+          rgba(118, 75, 162, 0.1)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .countdown-box:hover::before {
+        opacity: 1;
       }
 
       .countdown-box:hover {
-        transform: scale(1.05);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       }
 
       .countdown-number {
-        font-size: 3em;
-        font-weight: bold;
-        color: #e91e63;
-        margin: 0;
+        font-size: clamp(2rem, 8vw, 3rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
       }
 
       .countdown-label {
-        font-size: 1.2em;
-        color: #333;
+        font-size: clamp(0.75rem, 2vw, 0.9rem);
+        color: #666;
         text-transform: uppercase;
-        margin-top: 5px;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+        font-weight: 500;
       }
 
       .message {
-        font-size: 1.8em;
-        color: #fff;
-        margin-top: 30px;
-        font-weight: bold;
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.5s ease;
+      }
+
+      .message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Progress ring */
+      .progress-ring {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 100px;
+      }
+
+      .progress-ring__circle {
+        stroke: #667eea;
+        stroke-width: 4;
+        fill: transparent;
+        r: 46;
+        cx: 50;
+        cy: 50;
+        stroke-dasharray: 289;
+        stroke-dashoffset: 289;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+        transition: stroke-dashoffset 1s linear;
+      }
+
+      /* Desktop adjustments */
+      @media (min-width: 768px) {
+        .countdown-container {
+          padding: 3rem 2.5rem;
+        }
+
+        .countdown {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+        }
+
+        .countdown-box {
+          padding: 1.5rem 1.25rem;
+        }
+      }
+
+      /* Small mobile adjustments */
+      @media (max-width: 375px) {
+        .countdown-container {
+          padding: 1.5rem 1rem;
+        }
+
+        .countdown {
+          gap: 0.75rem;
+        }
+
+        .countdown-box {
+          padding: 1rem 0.75rem;
+        }
+      }
+
+      /* Landscape mobile */
+      @media (max-height: 500px) and (orientation: landscape) {
+        body {
+          padding: 1rem 0;
+        }
+
+        .countdown-container {
+          padding: 1.5rem 1.25rem;
+        }
+
+        h1 {
+          margin-bottom: 1rem;
+        }
+
+        .subtitle {
+          margin-bottom: 1rem;
+        }
+
+        .countdown {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+        }
+
+        .countdown-box {
+          padding: 0.75rem;
+        }
+      }
+
+      /* Animation for countdown changes */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .countdown-number.pulse {
+        animation: pulse 0.5s ease-in-out;
       }
     </style>
   </head>
   <body>
     <div class="countdown-container">
-      <h1>Countdown to Bali Adventure</h1>
+      <h1>Bali Adventure</h1>
+      <p class="subtitle">The journey begins soon...</p>
       <div class="countdown" id="countdown">
         <div class="countdown-box">
           <div class="countdown-number" id="days">00</div>
@@ -118,11 +301,16 @@
         </div>
       </div>
       <div class="message" id="message"></div>
+      <svg class="progress-ring" width="100" height="100">
+        <circle class="progress-ring__circle" id="progress"></circle>
+      </svg>
     </div>
 
     <script>
       // Set the target date in Bali time (WITA UTC+8)
       const targetDate = new Date("2025-06-29T16:05:00Z");
+      const totalTime = targetDate - new Date();
+      let lastValues = {};
 
       function updateCountdown() {
         const now = new Date();
@@ -131,8 +319,10 @@
         if (timeDifference <= 0) {
           clearInterval(countdownInterval);
           document.getElementById("countdown").style.display = "none";
-          document.getElementById("message").textContent =
-            "The adventure has begun!";
+          const message = document.getElementById("message");
+          message.textContent = "The adventure has begun! 🌴";
+          message.classList.add("show");
+          document.querySelector(".progress-ring").style.display = "none";
           return;
         }
 
@@ -145,20 +335,30 @@
         );
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-        document.getElementById("days").textContent = String(days).padStart(
-          2,
-          "0"
-        );
-        document.getElementById("hours").textContent = String(hours).padStart(
-          2,
-          "0"
-        );
-        document.getElementById("minutes").textContent = String(
-          minutes
-        ).padStart(2, "0");
-        document.getElementById("seconds").textContent = String(
-          seconds
-        ).padStart(2, "0");
+        // Update values with animation
+        updateValue("days", days);
+        updateValue("hours", hours);
+        updateValue("minutes", minutes);
+        updateValue("seconds", seconds);
+
+        // Update progress ring
+        const progress = (totalTime - timeDifference) / totalTime;
+        const circumference = 2 * Math.PI * 46;
+        const offset = circumference - progress * circumference;
+        document.getElementById("progress").style.strokeDashoffset = offset;
+      }
+
+      function updateValue(id, value) {
+        const element = document.getElementById(id);
+        const paddedValue = String(value).padStart(2, "0");
+
+        if (lastValues[id] !== value) {
+          element.classList.add("pulse");
+          setTimeout(() => element.classList.remove("pulse"), 500);
+        }
+
+        element.textContent = paddedValue;
+        lastValues[id] = value;
       }
 
       const countdownInterval = setInterval(updateCountdown, 1000);
