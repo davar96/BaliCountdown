@@ -17,18 +17,28 @@
 
       .countdown-container {
         background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         text-align: center;
-        max-width: 350px; /* Mobile-friendly max width */
+        max-width: 800px; /* Wider container for desktop */
       }
 
       .countdown {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-        margin: 20px 0;
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      /* Desktop enhancements */
+      @media (min-width: 768px) {
+        .countdown-number {
+          font-size: 4em; /* Larger numbers on desktop */
+        }
+        .countdown-label {
+          font-size: 1.5em; /* Slightly larger labels */
+        }
       }
 
       /* Mobile layout */
@@ -45,10 +55,11 @@
       }
 
       .countdown-box {
-        padding: 20px;
+        padding: 25px;
         background: #fff;
-        border-radius: 10px;
+        border-radius: 15px;
         transition: transform 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
       }
 
       .countdown-box:hover {
@@ -70,9 +81,10 @@
       }
 
       .message {
-        font-size: 1.5em;
+        font-size: 1.8em;
         color: #fff;
-        margin-top: 20px;
+        margin-top: 30px;
+        font-weight: bold;
       }
     </style>
   </head>
